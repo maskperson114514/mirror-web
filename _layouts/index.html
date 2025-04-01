@@ -8,10 +8,10 @@
 		{% include nav.html %}
 		<div id="mirrors">
 			 <!-- 弹窗容器 -->
-			 <div class="timejump-modal" id="march27-modal">
+			 <div class="timejump-modal" id="april-modal">
 				<h2>🤗 我们更新啦！</h2>
 				<h4>欢迎来到镜像站！在这里，一切问题都会"原样反射"</h4>
-				<button onclick="handleMarch27()">立即体验</button>
+				<button onclick="handleApril()">立即体验</button>
 			</div>
 		
 			<div class="timejump-modal" id="time-error-modal">
@@ -253,22 +253,21 @@
 
 		// 日期检测逻辑
 		const today = new Date();
-		const isMarch27 = today.getMonth() === 3 && today.getDate() === 1;
+		const isApril = today.getMonth() === 3 && today.getDate() === 1;
 
 		// 生成随机动画参数
 		function getRandomParams() {
 			return {
 				// rotateY: -180°到180°之间随机，但限制最大变化幅度为120°
-				rotateYFrom: Math.random() * 20 - 30,
+				rotateYFrom: Math.random() * -60,
 				// -30°到30°
-				rotateYTo: Math.random() * 40 - 120,
+				rotateYTo: Math.random() * 70,
 				// -120°到120°
 
 				// scale: 0.7到1.3之间随机，确保最小不小于0.5
-				scaleFrom: (Math.random() * 0.4) + 1.2,
+				scaleFrom:1,
 				// 0.7到1.1
-				scaleTo: Math.max(0.2, (Math.random() * 0.4) + 0.9),
-				// 0.5到1.3(确保不小于0.5)
+				scaleTo: 0.6,// 0.5到1.3(确保不小于0.5)
 
 				// opacity: 0.4到0.9之间随机，确保可读性
 				opacityFrom: 1,
@@ -277,8 +276,8 @@
 			};
 		}
 
-		// 动态加载愚人节样式（仅3月27日时加载）
-		if (isMarch27) {
+		// 动态加载愚人节样式
+		if (isApril) {
 			const style = document.createElement('style');
 			style.id = 'april-fools-style';
 			style.textContent = `
@@ -306,7 +305,7 @@
 	border-radius:10px;
 	animation: aprilFools 2s forwards;
 	transform-style: preserve-3d;
-	transform-origin: 30% 30%;
+	transform-origin: center center;
   }
 
   @keyframes aprilFools {
@@ -352,14 +351,12 @@
   @keyframes shadowMove {
   from { 
     transform: rotateY(${params.rotateYFrom}deg) 
-              scale(${params.scaleFrom}) 
-              rotateZ(20deg);
+              scale(${params.scaleFrom}) ;
     opacity: ${params.opacityFrom};
   }
   to { 
-    transform: rotateY(${params.rotateYTo + 600}deg)  /* 增加360度实现完整旋转 */
-              scale(${params.scaleTo}) 
-              rotateZ(300deg);  /* Z轴也可设置完整旋转 */
+    transform: rotateY(${params.rotateYTo}deg)  /* 增加360度实现完整旋转 */
+              scale(${params.scaleTo}) ;  /* Z轴也可设置完整旋转 */
     opacity: ${params.opacityTo};
   }
 }
@@ -391,10 +388,10 @@
 		}
 
 		function showMarch27Modal() {
-			document.getElementById('march27-modal').classList.add('active');
+			document.getElementById('april-modal').classList.add('active');
 		}
 
-		function handleMarch27() {
+		function handleApril() {
 			// 移除所有动态添加的样式
 			const aprilFoolsStyle = document.getElementById('april-fools-style');
 			const dynamicStyle = document.getElementById('dynamic-animation-style');
@@ -424,7 +421,7 @@
 			document.head.appendChild(styleReset);
 
 			// 关闭当前弹窗并显示错误提示
-			document.getElementById('march27-modal').classList.remove('active');
+			document.getElementById('april-modal').classList.remove('active');
 			setTimeout( () => {
 				document.getElementById('time-error-modal').classList.add('active');
 			}
